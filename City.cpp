@@ -55,9 +55,9 @@ void strtoint(std::string& s, int& x, int& y) {
 CCity::CCity(int x, int y) {
 	width = x;
 	height = y;
-	Field.resize(height);
+	Field = new CBuilding**[height];
 	for (int i = 0; i < height; ++i) {
-		Field[i].resize(width);
+		Field[i] = new CBuilding*[width];
 		for (int j = 0; j < width; ++j)
 			Field[i][j] = NULL;	
 	}
@@ -73,6 +73,7 @@ CCity::CCity(int x, int y) {
 }
 
 CCity::~CCity() {
+	delete Field;
 	delete Factories;
 }
 
@@ -115,16 +116,16 @@ void CCity::Check(clock_t current) {
 }
 
 void CCity::Build() {
-	std::string s;
+	std::string t;
 	bool flag = false;
 	int i = 0;
 	std::cout << "Enter the type of the building (House / Work / Park)" << std::endl;
 	while (!flag) {
-		std::getline(std::cin, s);
-		if (s == "Exit")
+		std::getline(std::cin, t);
+		if (t == "Exit")
 			return;
 		i = 0;
-		while ((i < 3) && (s != Factories[i]->type))
+		while ((i < 3) && (t != Factories[i]->type))
 			++i;
 		if (i < 3)
 			flag = true;
@@ -132,6 +133,7 @@ void CCity::Build() {
 			std::cout << "Error! Wrong type of the building!" << std::endl;
 	}
 	flag = false;
+	std::string s;
 	int x, y;
 	while (!flag) {
 		std::cout << "Enter height and width" << std::endl;
@@ -154,7 +156,7 @@ void CCity::Build() {
 			y = -1;
 		}
 		else {
-			if (s == "House")
+			if (t == "House")
 				flag = true;
 			else {
 				if (((x > 0) && (Field[y][x - 1] != NULL) && (Field[y][x - 1]->symbol == 'R')) || ((x < width - 1) && (Field[y][x + 1] != NULL) && (Field[y][x + 1]->symbol == 'R')) || ((y > 0) && (Field[y - 1][x] != NULL) && (Field[y - 1][x]->symbol == 'R')) || ((x < height - 1) && (Field[y + 1][x] != NULL) && (Field[y + 1][x]->symbol == 'R')))

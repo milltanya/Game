@@ -11,7 +11,7 @@ void strtoint(std::string& s, int& x, int& y);
 class CCity
 {
 private:
-	std::vector<std::vector<CBuilding*> > Field;
+	CBuilding*** Field;
 	CFactory** Factories;
 	int width, height;
 	State City_State;
