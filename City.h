@@ -12,7 +12,7 @@ class CCity
 {
 private:
 	std::vector<std::vector<CBuilding*> > Field;
-	std::vector<CFactory*> Factories;
+	CFactory** Factories;
 	int width, height;
 	State City_State;
 public:

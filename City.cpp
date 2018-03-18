@@ -5,6 +5,7 @@
 #include "Park.h"
 #include "Road.h"
 #include <iostream>
+#include <string>
 
 void strtoint(std::string& s, int& x, int& y) {
 	int i = 0;
@@ -26,7 +27,7 @@ void strtoint(std::string& s, int& x, int& y) {
 		y = -1;
 		return;
 	}
-	x = std::stoi(s.substr(i, j - i + 1));
+	x = stoi(s.substr(i, j - i + 1));
 	i = j + 1;
 	while ((i < length) && !(isdigit(s[i])))
 		++i;
@@ -39,7 +40,7 @@ void strtoint(std::string& s, int& x, int& y) {
 	j = i;
 	while ((i < length) && isdigit(s[j]))
 		++j;
-	y = std::stoi(s.substr(i, j - i + 1));
+	y = stoi(s.substr(i, j - i + 1));
 	i = j + 1;
 	while ((i < length) && !(isdigit(s[i])))
 		++i;
@@ -54,17 +55,25 @@ void strtoint(std::string& s, int& x, int& y) {
 CCity::CCity(int x, int y) {
 	width = x;
 	height = y;
-	Field = std::vector<std::vector<CBuilding*> >(height, std::vector<CBuilding*>(width, NULL));
+	Field.resize(height);
+	for (int i = 0; i < height; ++i) {
+		Field[i].resize(width);
+		for (int j = 0; j < width; ++j)
+			Field[i][j] = NULL;	
+	}
 	City_State.time = clock();
 	City_State.money = 10;
 	City_State.population = 1;
 	City_State.wealth = 5;
 	City_State.happiness = 5;
-	Factories = { new CHouseFactory, new CWorkFactory, new CParkFactory };
+	Factories = new CFactory*[3];
+	Factories[0] = new CHouseFactory;
+	Factories[1] = new CWorkFactory;
+	Factories[2] = new CParkFactory;
 }
 
 CCity::~CCity() {
-
+	delete Factories;
 }
 
 void CCity::print() {
@@ -115,9 +124,9 @@ void CCity::Build() {
 		if (s == "Exit")
 			return;
 		i = 0;
-		while ((i < Factories.size()) && (s != Factories[i]->type))
+		while ((i < 3) && (s != Factories[i]->type))
 			++i;
-		if (i < Factories.size())
+		if (i < 3)
 			flag = true;
 		else
 			std::cout << "Error! Wrong type of the building!" << std::endl;
@@ -139,7 +148,7 @@ void CCity::Build() {
 				y = -1;
 			}
 		}
-		if (Field[y][x] != nullptr) {
+		if (Field[y][x] != NULL) {
 			std::cout << "Error! There is an object!" << std::endl;
 			x = -1;
 			y = -1;
@@ -148,7 +157,7 @@ void CCity::Build() {
 			if (s == "House")
 				flag = true;
 			else {
-				if (((x > 0) && (Field[y][x - 1] != nullptr) && (Field[y][x - 1]->symbol == 'R')) || ((x < width - 1) && (Field[y][x + 1] != nullptr) && (Field[y][x + 1]->symbol == 'R')) || ((y > 0) && (Field[y - 1][x] != nullptr) && (Field[y - 1][x]->symbol == 'R')) || ((x < height - 1) && (Field[y + 1][x] != nullptr) && (Field[y + 1][x]->symbol == 'R')))
+				if (((x > 0) && (Field[y][x - 1] != NULL) && (Field[y][x - 1]->symbol == 'R')) || ((x < width - 1) && (Field[y][x + 1] != NULL) && (Field[y][x + 1]->symbol == 'R')) || ((y > 0) && (Field[y - 1][x] != NULL) && (Field[y - 1][x]->symbol == 'R')) || ((x < height - 1) && (Field[y + 1][x] != NULL) && (Field[y + 1][x]->symbol == 'R')))
 					flag = true;
 				else {
 					std::cout << "Error! There is no road nearby! You can Continue, Add a road or Exit the building process" << std::endl;
@@ -183,7 +192,7 @@ void CCity::AddRoad() {
 				y = -1;
 			}
 		}
-		if (Field[y][x] != nullptr) {
+		if (Field[y][x] != NULL) {
 			std::cout << "Error! There is an object!" << std::endl;
 			x = -1;
 			y = -1;
