@@ -7,7 +7,7 @@
 #include <iostream>
 #include <string>
 
-void strtoint(std::string& s, int& x, int& y) {
+void strtoint(const std::string& s, int& x, int& y) {
 	int i = 0;
 	int length = s.size();
 	while ((i < length) && !(isdigit(s[i])))

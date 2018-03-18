@@ -6,7 +6,7 @@
 #include <ctime>
 #include "Building.h"
 
-void strtoint(std::string& s, int& x, int& y);
+void strtoint(const std::string& s, int& x, int& y);
 
 class CCity
 {

@@ -4,8 +4,8 @@
 #include "City.h"
 
 
-int main()
-{
+
+int main() {
 	int width = -1;
 	int height = -1;
 	std::cout << "Enter height and width" << std::endl;
@@ -34,5 +34,4 @@ int main()
 		std::cout << "Check(any symbol) / Build / Add a road / End" << std::endl;
 		std::getline(std::cin, s);
 	}
-	return 0;
 }
