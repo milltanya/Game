@@ -100,7 +100,7 @@ void CCity::print() {
 		}
 		std::cout << std::endl;
 	}
-	std::cout << "money: " << City_State.money << "  population: " << City_State.population << "  wealth: " << City_State.wealth << "  happiness = " << City_State.happiness << std::endl << std::endl;
+	std::cout << "money: " << City_State.money << "  population: " << City_State.population << "  wealth: " << City_State.wealth << "  happiness: " << City_State.happiness << std::endl << std::endl;
 }
 
 void CCity::Check(clock_t current) {

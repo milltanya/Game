@@ -3,6 +3,7 @@
 #include <string>
 #include "City.h"
 
+
 int main()
 {
 	int width = -1;
@@ -20,7 +21,7 @@ int main()
 	}
 	CCity City(width, height);
 	City.print();
-	std::cout << "Check(any symbol) / Build / Add a road / End (or Exit if you want to exit a process)" << std::endl;
+	std::cout << "Check(any symbol) / Build / Add a road / End" << std::endl;
 	std::getline(std::cin, s);
 	while (!(s == "End")) {
 		if (s == "Build")
@@ -30,7 +31,7 @@ int main()
 				City.AddRoad();
 		City.Check(clock());
 		City.print();
-		std::cout << "Check(any symbol) / Build / Add a road / End (or Exit if you want to exit a process)" << std::endl;
+		std::cout << "Check(any symbol) / Build / Add a road / End" << std::endl;
 		std::getline(std::cin, s);
 	}
 	return 0;
