@@ -14,7 +14,6 @@ void CWork::action(State& current) {
 		current.money += level;
 		current.wealth += level;
 		current.happiness -= action_cost;
-		std::cout << "New taxes were collected. Money increase = " << level << std::endl;
 		prev_time = current.time;
 	}
 }

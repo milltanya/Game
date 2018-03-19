@@ -13,7 +13,6 @@ void strtoint(const std::string& s, int& x, int& y) {
 	while ((i < length) && !(isdigit(s[i])))
 		++i;
 	if (i == length) {
-		std::cout << "Error!" << std::endl;
 		x = -1;
 		y = -1;
 		return;
@@ -22,7 +21,6 @@ void strtoint(const std::string& s, int& x, int& y) {
 	while ((i < length) && isdigit(s[j]))
 		++j;
 	if (j == length) {
-		std::cout << "Error!" << std::endl;
 		x = -1;
 		y = -1;
 		return;
@@ -32,7 +30,6 @@ void strtoint(const std::string& s, int& x, int& y) {
 	while ((i < length) && !(isdigit(s[i])))
 		++i;
 	if (i == length) {
-		std::cout << "Error!" << std::endl;
 		x = -1;
 		y = -1;
 		return;
@@ -45,7 +42,6 @@ void strtoint(const std::string& s, int& x, int& y) {
 	while ((i < length) && !(isdigit(s[i])))
 		++i;
 	if (i < length) {
-		std::cout << "Error!" << std::endl;
 		x = -1;
 		y = -1;
 		return;
@@ -149,6 +145,8 @@ void CCity::Build() {
 				x = -1;
 				y = -1;
 			}
+			if ((x == -1) && (y == -1))
+				std::cout << "Error!" << std::endl;
 		}
 		if (Field[y][x] != NULL) {
 			std::cout << "Error! There is an object!" << std::endl;

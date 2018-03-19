@@ -13,7 +13,6 @@ void CHouse::action(State& current) {
 	if (((current.time - prev_time) / CLOCKS_PER_SEC >= action_time) && (current.wealth >= action_cost)) {
 		current.population += level;
 		current.wealth -= action_cost;
-		std::cout << "New people were born. Population increase = " << level << std::endl;
 		prev_time = current.time;
 	}
 }
