@@ -5,7 +5,10 @@ CPark::CPark() {
 	prev_time = clock();
 	level = 1;
 	action_time = 2;
-	symbol = 'P';
+}
+
+std::string CPark::getType() {
+	return "Park";
 }
 
 void CPark::action(State& current) {

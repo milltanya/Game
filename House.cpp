@@ -2,11 +2,14 @@
 #include <iostream>
 
 CHouse::CHouse() {
-	symbol = 'H';
 	prev_time = clock();
 	level = 1;
 	action_cost = 3;
 	action_time = 2;
+}
+
+std::string CHouse::getType() {
+	return "House";
 }
 
 void CHouse::action(State& current) {

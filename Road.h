@@ -6,6 +6,7 @@ class CRoad : public CBuilding {
 private:
 	CRoad();
 	virtual void action(State& current);
+	virtual std::string getType();
 public:
 	static CBuilding& getInstance();
 };

@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include "City.h"
+#include "Graphics.h"
 
 
 
@@ -20,18 +21,16 @@ int main() {
 		}
 	}
 	CCity City(width, height);
-	City.print();
-	std::cout << "Check(any symbol) / Build / Add a road / End" << std::endl;
+	draw(City);
+	std::cout << "Enter commands: " << std::endl;
+	std::cout << "End        or        Build <type> <coords(y x)>        or        any symbol for checking" << std::endl;
 	std::getline(std::cin, s);
 	while (!(s == "End")) {
-		if (s == "Build")
-			City.Build();
-		else
-			if (s == "Add a road")
-				City.AddRoad();
-		City.Check(clock());
-		City.print();
-		std::cout << "Check(any symbol) / Build / Add a road / End" << std::endl;
+		if (s != "") {
+			City.Check(s, clock());
+		}
+		draw(City);
 		std::getline(std::cin, s);
 	}
+	return 0;
 }

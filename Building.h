@@ -11,11 +11,13 @@ struct State
 };
 
 class CBuilding {
+private:
+	friend void draw(const CBuilding* Building);
 public:
 	CBuilding() {}
 	virtual ~CBuilding() {}
 	virtual void action(State& current) = 0;
-	char symbol;
+	virtual std::string getType() = 0;
 }; 
 
 class CFactory {

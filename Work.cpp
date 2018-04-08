@@ -6,7 +6,10 @@ CWork::CWork() {
 	level = 1;
 	action_cost = 3;
 	action_time = 2;
-	symbol = 'W';
+}
+
+std::string CWork::getType() {
+	return "Work";
 }
 
 void CWork::action(State& current) {

@@ -2,7 +2,6 @@
 #include <iostream>
 
 CRoad::CRoad() {
-	symbol = 'R';
 }
 
 void CRoad::action(State& current) {}
@@ -10,4 +9,8 @@ void CRoad::action(State& current) {}
 CBuilding& CRoad::getInstance() {
 	static CRoad instance;
 	return instance;
+}
+
+std::string CRoad::getType() {
+	return "Road";
 }

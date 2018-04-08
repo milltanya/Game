@@ -33,17 +33,23 @@ TEST(strtoint, manynumbers) {
 
 TEST(factories, house) {
 	CHouseFactory Factory;	
-	EXPECT_EQ('H', Factory.create()->symbol);
+	CBuilding* tmp = Factory.create();
+	EXPECT_EQ("House", tmp->getType());
+	delete tmp;
 }
 
 TEST(factories, work) {
-	CWorkFactory Factory;	
-	EXPECT_EQ('W', Factory.create()->symbol);
+	CWorkFactory Factory;		
+	CBuilding* tmp = Factory.create();
+	EXPECT_EQ("Work", tmp->getType());
+	delete tmp;
 }
 
 TEST(factories, park) {
-	CParkFactory Factory;	
-	EXPECT_EQ('P', Factory.create()->symbol);
+	CParkFactory Factory;		
+	CBuilding* tmp = Factory.create();
+	EXPECT_EQ("Park", tmp->getType());
+	delete tmp;
 }
 
 TEST(actions, house) {
@@ -56,6 +62,7 @@ TEST(actions, house) {
 	tmpstate.population = 100;
 	tmp->action(tmpstate);
 	EXPECT_EQ(101, tmpstate.population);
+	delete tmp;
 }
 
 TEST(actions, work) {
@@ -68,6 +75,7 @@ TEST(actions, work) {
 	tmpstate.population = 100;
 	tmp->action(tmpstate);
 	EXPECT_EQ(97, tmpstate.happiness);
+	delete tmp;
 }
 
 TEST(actions, park) {
@@ -80,6 +88,7 @@ TEST(actions, park) {
 	tmpstate.population = 100;
 	tmp->action(tmpstate);
 	EXPECT_EQ(101, tmpstate.happiness);
+	delete tmp;
 }
 
 int main(int argc, char *argv[]) {

@@ -73,34 +73,56 @@ CCity::~CCity() {
 	delete Factories;
 }
 
-void CCity::print() {
-	std::cout << "   ";
-	for (int i = 0; i < width; ++i) {
-		std::cout << " " << i;
-		if (i < 10) {
-			std::cout << " ";
+void CCity::Build(const std::string& t, const int x, const int y) {
+	int i = 0;
+	if (t != "Road") {
+		while ((i < 3) && (t != Factories[i]->type))
+			++i;
+		if (i == 3) {
+			std::cout << "Error! Wrong type of the building!" << std::endl;
+			return;
 		}
 	}
-	std::cout << std::endl;
-	for (int i = 0; i < height; ++i) {
-		std::cout << " " << i;
-		if (i < 10) {
-			std::cout << " ";
-		}
-		for (int j = 0; j < width; ++j) {
-			if (Field[i][j] == NULL) {
-				std::cout << "   ";
-			}
-			else {
-				std::cout << " " << Field[i][j]->symbol << " ";
-			}
-		}
-		std::cout << std::endl;
+	if ((y < 0) || (y >= height) || (x < 0) || (x >= width)) {
+		std::cout << "Error! Wrong coordinates!" << std::endl;
+		return;
 	}
-	std::cout << "money: " << City_State.money << "  population: " << City_State.population << "  wealth: " << City_State.wealth << "  happiness: " << City_State.happiness << std::endl << std::endl;
+	if (Field[y][x] != NULL) {
+		std::cout << "Error! There is an object!" << std::endl;
+		return;
+	}
+	else {
+		if ((t != "House") && !(((x > 0) && (Field[y][x - 1] != NULL) && (Field[y][x - 1]->getType() == "Road")) ||
+			((x < width - 1) && (Field[y][x + 1] != NULL) && (Field[y][x + 1]->getType() == "Road")) ||
+			((y > 0) && (Field[y - 1][x] != NULL) && (Field[y - 1][x]->getType() == "Road")) ||
+			((x < height - 1) && (Field[y + 1][x] != NULL) && (Field[y + 1][x]->getType() == "Road")))) {
+			std::cout << "Error! There is no road nearby!" << std::endl;
+			return;
+		}
+	}
+	if (t == "Road") {
+		Field[y][x] = &CRoad::getInstance();
+	}
+	else {
+		Field[y][x] = Factories[i]->create();
+	}
 }
 
-void CCity::Check(clock_t current) {
+void CCity::Check(const std::string& s, const clock_t& current) {
+	int i = 0;
+	while (s[i] != ' ') {
+		++i;
+	}
+	if (s.substr(0, i) == "Build") {
+		int j = i+1;
+		while (s[j] != ' ') {
+			++j;
+		}
+		int x, y;
+		strtoint(s.substr(j), x, y);
+		std::cout << s.substr(i + 1, j - i - 1) << std::endl;
+		Build(s.substr(i + 1, j - i - 1), x, y);
+	}
 	City_State.time = current;
 	for (int i = 0; i < height; ++i) {
 		for (int j = 0; j < width; ++j) {
@@ -109,97 +131,4 @@ void CCity::Check(clock_t current) {
 			}
 		}
 	}
-}
-
-void CCity::Build() {
-	std::string t;
-	bool flag = false;
-	int i = 0;
-	std::cout << "Enter the type of the building (House / Work / Park)" << std::endl;
-	while (!flag) {
-		std::getline(std::cin, t);
-		if (t == "Exit")
-			return;
-		i = 0;
-		while ((i < 3) && (t != Factories[i]->type))
-			++i;
-		if (i < 3)
-			flag = true;
-		else
-			std::cout << "Error! Wrong type of the building!" << std::endl;
-	}
-	flag = false;
-	std::string s;
-	int x, y;
-	while (!flag) {
-		std::cout << "Enter height and width" << std::endl;
-		x = -1;
-		y = -1;
-		while ((x < 0) || (y < 0)) {
-			std::cout << "Format: 0 <= Height < " << height << " and 0 <= Width < " << width << "" << std::endl;
-			std::getline(std::cin, s);
-			if (s == "Exit")
-				return;
-			strtoint(s, y, x);
-			if ((y < 0) || (y >= height) || (x < 0) || (x >= width)) {
-				x = -1;
-				y = -1;
-			}
-			if ((x == -1) && (y == -1))
-				std::cout << "Error!" << std::endl;
-		}
-		if (Field[y][x] != NULL) {
-			std::cout << "Error! There is an object!" << std::endl;
-			x = -1;
-			y = -1;
-		}
-		else {
-			if (t == "House")
-				flag = true;
-			else {
-				if (((x > 0) && (Field[y][x - 1] != NULL) && (Field[y][x - 1]->symbol == 'R')) || ((x < width - 1) && (Field[y][x + 1] != NULL) && (Field[y][x + 1]->symbol == 'R')) || ((y > 0) && (Field[y - 1][x] != NULL) && (Field[y - 1][x]->symbol == 'R')) || ((x < height - 1) && (Field[y + 1][x] != NULL) && (Field[y + 1][x]->symbol == 'R')))
-					flag = true;
-				else {
-					std::cout << "Error! There is no road nearby! You can Continue, Add a road or Exit the building process" << std::endl;
-					std::getline(std::cin, s);
-					if (s == "Exit")
-						return;
-					if (s == "Add a road")
-						AddRoad();
-				}
-			}
-		}
-	}
-	Field[y][x] = Factories[i]->create();
-}
-
-void CCity::AddRoad() {
-	bool flag = false;
-	int x, y;
-	std::string s;
-	while (!flag) {
-		std::cout << "Enter height and width" << std::endl;
-		x = -1;
-		y = -1;
-		while ((x < 0) || (y < 0)) {
-			std::cout << "Format: 0 <= Height < " << height << " and 0 <= Width < " << width << "" << std::endl;
-			std::getline(std::cin, s);
-			if (s == "Exit")
-				return;
-			strtoint(s, y, x);
-			if ((y < 0) || (y >= height) || (x < 0) || (x >= width)) {
-				x = -1;
-				y = -1;
-			}
-		}
-		if (Field[y][x] != NULL) {
-			std::cout << "Error! There is an object!" << std::endl;
-			x = -1;
-			y = -1;
-		}
-		else {
-			flag = true;
-		}
-	}
-	Field[y][x] = &CRoad::getInstance();
 }

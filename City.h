@@ -15,13 +15,12 @@ private:
 	CFactory** Factories;
 	int width, height;
 	State City_State;
+	friend void draw(const CCity& City);
+	void Build(const std::string& s, const int x, const int y);
 public:
 	CCity(int x, int y);
 	~CCity();
-	void print();
-	void Check(clock_t current);
-	void Build();
-	void AddRoad();
+	void Check(const std::string& s, const clock_t& current);
 };
 
 #endif
