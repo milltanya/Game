@@ -15,9 +15,10 @@ private:
 	CFactory** Factories;
 	int width, height;
 	State City_State;
-	friend void draw(const CCity& City);
+	friend void draw(CCity* City);
 	void Build(const std::string& s, const int x, const int y);
 public:
+	CCity();
 	CCity(int x, int y);
 	~CCity();
 	void Check(const std::string& s, const clock_t& current);

@@ -11,8 +11,6 @@ struct State
 };
 
 class CBuilding {
-private:
-	friend void draw(const CBuilding* Building);
 public:
 	CBuilding() {}
 	virtual ~CBuilding() {}

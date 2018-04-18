@@ -21,15 +21,14 @@ int main() {
 		}
 	}
 	CCity City(width, height);
-	draw(City);
+	CCityDecorator CityDec(&City);
 	std::cout << "Enter commands: " << std::endl;
 	std::cout << "End        or        Build <type> <coords(y x)>        or        any symbol for checking" << std::endl;
 	std::getline(std::cin, s);
 	while (!(s == "End")) {
 		if (s != "") {
-			City.Check(s, clock());
+			CityDec.Check(s, clock());
 		}
-		draw(City);
 		std::getline(std::cin, s);
 	}
 	return 0;

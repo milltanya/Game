@@ -48,6 +48,26 @@ void strtoint(const std::string& s, int& x, int& y) {
 	}
 }
 
+CCity::CCity() {
+	width = 0;
+	height = 0;
+	Field = new CBuilding**[height];
+	for (int i = 0; i < height; ++i) {
+		Field[i] = new CBuilding*[width];
+		for (int j = 0; j < width; ++j)
+			Field[i][j] = NULL;
+	}
+	City_State.time = 0;
+	City_State.money = 0;
+	City_State.population = 0;
+	City_State.wealth = 0;
+	City_State.happiness = 0;
+	Factories = new CFactory*[3];
+	Factories[0] = new CHouseFactory;
+	Factories[1] = new CWorkFactory;
+	Factories[2] = new CParkFactory;
+}
+
 CCity::CCity(int x, int y) {
 	width = x;
 	height = y;
