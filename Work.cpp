@@ -2,7 +2,11 @@
 #include <iostream>
 
 CWork::CWork() {
-	prev_time = clock();
+	CWork(clock());
+}
+
+CWork::CWork(const clock_t& current) {
+	prev_time = current;
 	level = 1;
 	action_cost = 3;
 	action_time = 2;
@@ -25,6 +29,6 @@ CWorkFactory::CWorkFactory() {
 	type = "Work";
 }
 
-CBuilding* CWorkFactory::create() {
-	return new CWork;
+CBuilding* CWorkFactory::create(const clock_t& current) {
+	return new CWork(current);
 }

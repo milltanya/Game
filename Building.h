@@ -21,7 +21,7 @@ public:
 class CFactory {
 public:
 	std::string type;
-	virtual CBuilding* create() = 0;
+	virtual CBuilding* create(const clock_t& current) = 0;
 	virtual ~CFactory() { }
 };
 

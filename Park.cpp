@@ -2,7 +2,11 @@
 #include <iostream>
 
 CPark::CPark() {
-	prev_time = clock();
+	CPark(clock());
+}
+
+CPark::CPark(const clock_t& current) {
+	prev_time = current;
 	level = 1;
 	action_time = 2;
 }
@@ -22,6 +26,6 @@ CParkFactory::CParkFactory() {
 	type = "Park";
 }
 
-CBuilding* CParkFactory::create() {
-	return new CPark;
+CBuilding* CParkFactory::create(const clock_t& current) {
+	return new CPark(current);
 }

@@ -6,31 +6,6 @@
 #include "City.h"
 #include <gtest/gtest.h>
 
-TEST(strtoint, numbers) {
-	int x, y;
-	std::string s = "1234";	
-	strtoint(s, x, y);
-	EXPECT_EQ(-1, x);
-}
-TEST(strtoint, right) {
-	int x, y;
-	std::string s = "12 34";
-	strtoint(s, x, y);
-	EXPECT_EQ(34, y);
-}
-TEST(strtoint, symbols) {
-	int x, y;	
-	std::string s = "  dfgs 12 sdfg 34 dfgs";
-	strtoint(s, x, y);
-	EXPECT_EQ(12, x);
-}
-TEST(strtoint, manynumbers) {
-	int x, y;
-	std::string s = "12 34 45";
-	strtoint(s, x, y);
-	EXPECT_EQ(-1, y);
-}
-
 TEST(factories, house) {
 	CHouseFactory Factory;	
 	CBuilding* tmp = Factory.create();

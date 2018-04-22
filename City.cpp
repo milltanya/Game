@@ -4,68 +4,22 @@
 #include "Work.h"
 #include "Park.h"
 #include "Road.h"
+#include "Parser.h"
+#include "ParserAdapter.h"
 #include <iostream>
 #include <string>
-
-void strtoint(const std::string& s, int& x, int& y) {
-	int i = 0;
-	int length = s.size();
-	while ((i < length) && !(isdigit(s[i])))
-		++i;
-	if (i == length) {
-		x = -1;
-		y = -1;
-		return;
-	}
-	int j = i;
-	while ((i < length) && isdigit(s[j]))
-		++j;
-	if (j == length) {
-		x = -1;
-		y = -1;
-		return;
-	}
-	x = stoi(s.substr(i, j - i + 1));
-	i = j + 1;
-	while ((i < length) && !(isdigit(s[i])))
-		++i;
-	if (i == length) {
-		x = -1;
-		y = -1;
-		return;
-	}
-	j = i;
-	while ((i < length) && isdigit(s[j]))
-		++j;
-	y = stoi(s.substr(i, j - i + 1));
-	i = j + 1;
-	while ((i < length) && !(isdigit(s[i])))
-		++i;
-	if (i < length) {
-		x = -1;
-		y = -1;
-		return;
-	}
-}
 
 CCity::CCity() {
 	width = 0;
 	height = 0;
-	Field = new CBuilding**[height];
-	for (int i = 0; i < height; ++i) {
-		Field[i] = new CBuilding*[width];
-		for (int j = 0; j < width; ++j)
-			Field[i][j] = NULL;
-	}
+	Field = nullptr;
 	City_State.time = 0;
 	City_State.money = 0;
 	City_State.population = 0;
 	City_State.wealth = 0;
 	City_State.happiness = 0;
-	Factories = new CFactory*[3];
-	Factories[0] = new CHouseFactory;
-	Factories[1] = new CWorkFactory;
-	Factories[2] = new CParkFactory;
+	Factories = nullptr;
+	Parser = CParseAdapter(new CStringParse, width, height);
 }
 
 CCity::CCity(int x, int y) {
@@ -75,7 +29,7 @@ CCity::CCity(int x, int y) {
 	for (int i = 0; i < height; ++i) {
 		Field[i] = new CBuilding*[width];
 		for (int j = 0; j < width; ++j)
-			Field[i][j] = NULL;	
+			Field[i][j] = nullptr;
 	}
 	City_State.time = clock();
 	City_State.money = 10;
@@ -86,14 +40,26 @@ CCity::CCity(int x, int y) {
 	Factories[0] = new CHouseFactory;
 	Factories[1] = new CWorkFactory;
 	Factories[2] = new CParkFactory;
+	Parser = CParseAdapter(new CStringParse, width, height);
 }
 
 CCity::~CCity() {
+	for (int i = 0; i < height; ++i) {
+		for (int j = 0; j < width; ++j) {
+			if (Field[i][j] != nullptr) {
+				delete Field[i][j];
+			}
+		}
+		delete Field[i];
+	}
 	delete Field;
+	for (int i = 0; i < 3; ++i) {
+		delete Factories[i];
+	}
 	delete Factories;
 }
 
-void CCity::Build(const std::string& t, const int x, const int y) {
+void CCity::Build(const std::string& t, const int x, const int y, const clock_t& current) {
 	int i = 0;
 	if (t != "Road") {
 		while ((i < 3) && (t != Factories[i]->type))
@@ -107,15 +73,15 @@ void CCity::Build(const std::string& t, const int x, const int y) {
 		std::cout << "Error! Wrong coordinates!" << std::endl;
 		return;
 	}
-	if (Field[y][x] != NULL) {
+	if (Field[y][x] != nullptr) {
 		std::cout << "Error! There is an object!" << std::endl;
 		return;
 	}
 	else {
-		if ((t != "House") && !(((x > 0) && (Field[y][x - 1] != NULL) && (Field[y][x - 1]->getType() == "Road")) ||
-			((x < width - 1) && (Field[y][x + 1] != NULL) && (Field[y][x + 1]->getType() == "Road")) ||
-			((y > 0) && (Field[y - 1][x] != NULL) && (Field[y - 1][x]->getType() == "Road")) ||
-			((x < height - 1) && (Field[y + 1][x] != NULL) && (Field[y + 1][x]->getType() == "Road")))) {
+		if ((t != "House") && !(((x > 0) && (Field[y][x - 1] != nullptr) && (Field[y][x - 1]->getType() == "Road")) ||
+			((x < width - 1) && (Field[y][x + 1] != nullptr) && (Field[y][x + 1]->getType() == "Road")) ||
+			((y > 0) && (Field[y - 1][x] != nullptr) && (Field[y - 1][x]->getType() == "Road")) ||
+			((x < height - 1) && (Field[y + 1][x] != nullptr) && (Field[y + 1][x]->getType() == "Road")))) {
 			std::cout << "Error! There is no road nearby!" << std::endl;
 			return;
 		}
@@ -124,29 +90,23 @@ void CCity::Build(const std::string& t, const int x, const int y) {
 		Field[y][x] = &CRoad::getInstance();
 	}
 	else {
-		Field[y][x] = Factories[i]->create();
+		Field[y][x] = Factories[i]->create(current);
 	}
 }
 
 void CCity::Check(const std::string& s, const clock_t& current) {
-	int i = 0;
-	while (s[i] != ' ') {
-		++i;
-	}
-	if (s.substr(0, i) == "Build") {
-		int j = i+1;
-		while (s[j] != ' ') {
-			++j;
+	std::vector<std::string> parse = Parser.parse(s);
+	if (parse[0] == "Build") {
+		if (parse.size() == 4) {
+			Build(parse[1], stoi(parse[2]), stoi(parse[3]), current);
+		} else {
+			std::cout << "Error! Wrong number of arguments" << std::endl;
 		}
-		int x, y;
-		strtoint(s.substr(j), x, y);
-		std::cout << s.substr(i + 1, j - i - 1) << std::endl;
-		Build(s.substr(i + 1, j - i - 1), x, y);
 	}
 	City_State.time = current;
 	for (int i = 0; i < height; ++i) {
 		for (int j = 0; j < width; ++j) {
-			if (Field[i][j] != NULL) {
+			if (Field[i][j] != nullptr) {
 				Field[i][j]->action(this->City_State);
 			}
 		}

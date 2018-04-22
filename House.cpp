@@ -2,7 +2,11 @@
 #include <iostream>
 
 CHouse::CHouse() {
-	prev_time = clock();
+	CHouse(clock());
+}
+
+CHouse::CHouse(const clock_t& current) {
+	prev_time = current;
 	level = 1;
 	action_cost = 3;
 	action_time = 2;
@@ -24,6 +28,6 @@ CHouseFactory::CHouseFactory() {
 	type = "House";
 }
 
-CBuilding* CHouseFactory::create() {
-	return new CHouse;
+CBuilding* CHouseFactory::create(const clock_t& current) {
+	return new CHouse(current);
 }

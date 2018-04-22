@@ -5,6 +5,7 @@
 class CWork : public CBuilding {
 public:
 	CWork();
+	CWork(const clock_t& current);
 	virtual void action(State& current);
 	virtual std::string getType();
 private:
@@ -15,7 +16,7 @@ private:
 class CWorkFactory : public CFactory {
 public:
 	CWorkFactory();
-	CBuilding* create();
+	CBuilding* create(const clock_t& current);
 };
 
 

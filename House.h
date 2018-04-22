@@ -5,8 +5,9 @@
 class CHouse : public CBuilding {
 public:
 	CHouse();
-	virtual void action(State& current);
-	virtual std::string getType();
+	explicit CHouse(const clock_t& current);
+	void action(State& current) override;
+	std::string getType() override;
 private:
 	clock_t prev_time;
 	int level, action_time, action_cost;
@@ -15,7 +16,7 @@ private:
 class CHouseFactory : public CFactory {
 public:
 	CHouseFactory();
-	CBuilding* create();
+	CBuilding* create(const clock_t& current);
 };
 
 

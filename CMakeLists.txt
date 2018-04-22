@@ -2,7 +2,7 @@
 
 project (game)
 set(CMAKE_CXX_FLAGS -std=c++11) 
-set(SOURCES_LIST Building.h City.cpp City.h House.cpp House.h Park.cpp Park.h Road.cpp Road.h Work.cpp Work.h Graphics.h Graphics.cpp)
+set(SOURCES_LIST Building.h City.cpp City.h House.cpp House.h Park.cpp Park.h Road.cpp Road.h Work.cpp Work.h Graphics.h Graphics.cpp Parser.h Parser.cpp ParserAdapter.h ParserAdapter.cpp)
 
 if(DEBUG) 
 	set(CMAKE_BUILD_TYPE Debug) 

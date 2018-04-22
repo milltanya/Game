@@ -5,8 +5,7 @@
 #include <vector>
 #include <ctime>
 #include "Building.h"
-
-void strtoint(const std::string& s, int& x, int& y);
+#include "ParserAdapter.h"
 
 class CCity
 {
@@ -15,8 +14,9 @@ private:
 	CFactory** Factories;
 	int width, height;
 	State City_State;
+	CParseAdapter Parser(nullptr, 0, 0);
 	friend void draw(CCity* City);
-	void Build(const std::string& s, const int x, const int y);
+	void Build(const std::string& s, const int x, const int y, const clock_t& current);
 public:
 	CCity();
 	CCity(int x, int y);
