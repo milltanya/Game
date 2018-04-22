@@ -1,8 +1,10 @@
-#ifndef BUILDING
-#define BUILDING
+#ifndef GAME_BUILDING_H
+#define GAME_BUILDING_H
 
 #include <ctime>
+#include <iostream>
 #include <string>
+#include <vector>
 
 struct State
 {

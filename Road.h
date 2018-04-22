@@ -1,12 +1,16 @@
-#ifndef ROAD
-#define ROAD
+#ifndef GAME_ROAD_H
+#define GAME_ROAD_H
 #include "Building.h"
+#include <ctime>
+#include <iostream>
+#include <string>
+#include <vector>
 
 class CRoad : public CBuilding {
 private:
 	CRoad();
-	virtual void action(State& current);
-	virtual std::string getType();
+	void action(State& current) override;
+	std::string getType() override;
 public:
 	static CBuilding& getInstance();
 };

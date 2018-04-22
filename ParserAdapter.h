@@ -1,12 +1,10 @@
-//
-// Created by tanya on 19.04.2018.
-//
-
 #ifndef GAME_PARSERADAPTER_H
 #define GAME_PARSERADAPTER_H
 
-#include <vector>
+#include <ctime>
+#include <iostream>
 #include <string>
+#include <vector>
 #include "Parser.h"
 
 class CParse {
@@ -16,9 +14,10 @@ public:
 
 class CParseAdapter : public CParse {
 public:
+    CParseAdapter();
     CParseAdapter(CStringParse* p, int w, int h);
     ~CParseAdapter();
-    std::vector<std::string> parse(const std::string& s);
+    std::vector<std::string> parse(const std::string& s) override;
 private:
     int width, height;
     CStringParse* p_parse;

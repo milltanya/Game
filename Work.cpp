@@ -1,5 +1,8 @@
 #include "Work.h"
+#include <ctime>
 #include <iostream>
+#include <string>
+#include <vector>
 
 CWork::CWork() {
 	CWork(clock());

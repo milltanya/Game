@@ -1,6 +1,7 @@
 #include <ctime>
 #include <iostream>
 #include <string>
+#include <vector>
 #include "City.h"
 #include "Graphics.h"
 #include "Parser.h"

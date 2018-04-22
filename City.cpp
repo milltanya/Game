@@ -1,13 +1,17 @@
 #include "City.h"
 
+#include "Building.h"
 #include "House.h"
 #include "Work.h"
 #include "Park.h"
 #include "Road.h"
+#include "Graphics.h"
 #include "Parser.h"
 #include "ParserAdapter.h"
+#include <ctime>
 #include <iostream>
 #include <string>
+#include <vector>
 
 CCity::CCity() {
 	width = 0;
@@ -19,7 +23,6 @@ CCity::CCity() {
 	City_State.wealth = 0;
 	City_State.happiness = 0;
 	Factories = nullptr;
-	Parser = CParseAdapter(new CStringParse, width, height);
 }
 
 CCity::CCity(int x, int y) {

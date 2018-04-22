@@ -1,5 +1,8 @@
 #include "House.h"
+#include <ctime>
 #include <iostream>
+#include <string>
+#include <vector>
 
 CHouse::CHouse() {
 	CHouse(clock());
@@ -17,7 +20,7 @@ std::string CHouse::getType() {
 }
 
 void CHouse::action(State& current) {
-	if (((current.time - prev_time) / CLOCKS_PER_SEC >= action_time) && (current.wealth >= action_cost)) {
+	if (((current.time - prev_time) >= CLOCKS_PER_SEC*action_time) && (current.wealth >= action_cost)) {
 		current.population += level;
 		current.wealth -= action_cost;
 		prev_time = current.time;

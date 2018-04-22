@@ -1,6 +1,10 @@
-#ifndef HOUSE
-#define HOUSE
+#ifndef GAME_HOUSE_H
+#define GAME_HOUSE_H
 #include "Building.h"
+#include <ctime>
+#include <iostream>
+#include <string>
+#include <vector>
 
 class CHouse : public CBuilding {
 public:
@@ -16,7 +20,7 @@ private:
 class CHouseFactory : public CFactory {
 public:
 	CHouseFactory();
-	CBuilding* create(const clock_t& current);
+	CBuilding* create(const clock_t& current) override;
 };
 
 

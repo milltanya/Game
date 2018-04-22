@@ -1,8 +1,16 @@
 #include "ParserAdapter.h"
 
-#include <vector>
+#include <ctime>
+#include <iostream>
 #include <string>
+#include <vector>
 #include "Parser.h"
+
+CParseAdapter::CParseAdapter() {
+    p_parse = nullptr;
+    width = 0;
+    height = 0;
+}
 
 CParseAdapter::CParseAdapter(CStringParse* p, int w, int h) {
     p_parse = p;

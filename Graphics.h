@@ -1,7 +1,10 @@
-#ifndef GRAPHICS
-#define GRAPHICS
+#ifndef GAME_GRAPHICS_H
+#define GAME_GRAPHICS_H
 
+#include <ctime>
 #include <iostream>
+#include <string>
+#include <vector>
 #include "Building.h"
 #include "City.h"
 
@@ -10,7 +13,7 @@ protected:
     CCity* m_city;
 public:
     CCityDecorator();
-    CCityDecorator(CCity* city);
+    explicit CCityDecorator(CCity* city);
     ~CCityDecorator();
     void Check(const std::string& s, const clock_t& current);
 };

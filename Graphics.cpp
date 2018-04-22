@@ -1,5 +1,8 @@
 #include "Graphics.h"
+#include <ctime>
+#include <iostream>
 #include <string>
+#include <vector>
 
 
 CCityDecorator::CCityDecorator() {

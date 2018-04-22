@@ -1,13 +1,17 @@
-#ifndef WORK
-#define WORK
+#ifndef GAME_WORK_H
+#define GAME_WORK_H
 #include "Building.h"
+#include <ctime>
+#include <iostream>
+#include <string>
+#include <vector>
 
 class CWork : public CBuilding {
 public:
 	CWork();
-	CWork(const clock_t& current);
-	virtual void action(State& current);
-	virtual std::string getType();
+	explicit CWork(const clock_t& current);
+	void action(State& current) override;
+	std::string getType() override;
 private:
 	clock_t prev_time;
 	int level, action_time, action_cost;
@@ -16,7 +20,7 @@ private:
 class CWorkFactory : public CFactory {
 public:
 	CWorkFactory();
-	CBuilding* create(const clock_t& current);
+	CBuilding* create(const clock_t& current) override;
 };
 
 

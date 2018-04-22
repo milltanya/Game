@@ -1,6 +1,8 @@
 #ifndef GAME_PARSER_H
 #define GAME_PARSER_H
 
+#include <ctime>
+#include <iostream>
 #include <string>
 #include <vector>
 

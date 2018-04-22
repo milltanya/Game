@@ -4,25 +4,52 @@
 #include "Road.h"
 #include "Park.h"
 #include "City.h"
+#include "Parser.h"
+#include "ParserAdapter.h"
+#include <ctime>
+#include <iostream>
+#include <string>
+#include <vector>
 #include <gtest/gtest.h>
+
+TEST(parsing, one) {
+	CStringParse Parser;
+	std::string s = "One Two Three";
+	std::vector<std::string> parse = Parser.parse(s);
+    EXPECT_EQ(3, parse[0].length());
+}
+
+TEST(parsing, empty) {
+	CStringParse Parser;
+	std::string s = "";
+	std::vector<std::string> parse = Parser.parse(s);
+    EXPECT_EQ(0, parse.size());
+}
+
+TEST(parsing, three) {
+	CStringParse Parser;
+	std::string s = "One Two Three";
+	std::vector<std::string> parse = Parser.parse(s);
+    EXPECT_EQ(3, parse.size());
+}
 
 TEST(factories, house) {
 	CHouseFactory Factory;	
-	CBuilding* tmp = Factory.create();
+	CBuilding* tmp = Factory.create(clock());
 	EXPECT_EQ("House", tmp->getType());
 	delete tmp;
 }
 
 TEST(factories, work) {
 	CWorkFactory Factory;		
-	CBuilding* tmp = Factory.create();
+	CBuilding* tmp = Factory.create(clock());
 	EXPECT_EQ("Work", tmp->getType());
 	delete tmp;
 }
 
 TEST(factories, park) {
 	CParkFactory Factory;		
-	CBuilding* tmp = Factory.create();
+	CBuilding* tmp = Factory.create(clock());
 	EXPECT_EQ("Park", tmp->getType());
 	delete tmp;
 }
@@ -30,7 +57,7 @@ TEST(factories, park) {
 TEST(actions, house) {
 	CBuilding* tmp = new CHouse;
 	State tmpstate;
-	tmpstate.time = clock() + 10*CLOCKS_PER_SEC;
+	tmpstate.time = clock() + 1000*CLOCKS_PER_SEC;
 	tmpstate.money = 100;
 	tmpstate.happiness = 100;
 	tmpstate.wealth = 100;
@@ -43,7 +70,7 @@ TEST(actions, house) {
 TEST(actions, work) {
 	CBuilding* tmp = new CWork;
 	State tmpstate;
-	tmpstate.time = clock() + 10*CLOCKS_PER_SEC;
+	tmpstate.time = clock() + 10000*CLOCKS_PER_SEC;
 	tmpstate.money = 100;
 	tmpstate.happiness = 100;
 	tmpstate.wealth = 100;
@@ -56,7 +83,7 @@ TEST(actions, work) {
 TEST(actions, park) {
 	CBuilding* tmp = new CPark;
 	State tmpstate;
-	tmpstate.time = clock() + 10*CLOCKS_PER_SEC;
+	tmpstate.time = clock() + 100000*CLOCKS_PER_SEC;
 	tmpstate.money = 100;
 	tmpstate.happiness = 100;
 	tmpstate.wealth = 100;

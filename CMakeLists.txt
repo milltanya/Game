@@ -2,7 +2,7 @@
 
 project (game)
 set(CMAKE_CXX_FLAGS -std=c++11) 
-set(SOURCES_LIST Building.h City.cpp City.h House.cpp House.h Park.cpp Park.h Road.cpp Road.h Work.cpp Work.h Graphics.h Graphics.cpp Parser.h Parser.cpp ParserAdapter.h ParserAdapter.cpp)
+set(SOURCES_LIST Building.h City.cpp City.h Graphics.cpp Graphics.h House.cpp House.h Park.cpp Park.h Parser.cpp Parser.h ParserAdapter.cpp ParserAdapter.h Road.cpp Road.h Work.cpp Work.h)
 
 if(DEBUG) 
 	set(CMAKE_BUILD_TYPE Debug) 
@@ -19,4 +19,3 @@ if(WITH_TEST)
 else()
 	add_executable(game ${SOURCES_LIST} main.cpp)
 endif()
-

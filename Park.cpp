@@ -1,5 +1,8 @@
 #include "Park.h"
+#include <ctime>
 #include <iostream>
+#include <string>
+#include <vector>
 
 CPark::CPark() {
 	CPark(clock());
