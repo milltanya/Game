@@ -1,11 +1,12 @@
 #include "Work.h"
 #include <ctime>
-#include <iostream>
 #include <string>
-#include <vector>
 
 CWork::CWork() {
-	CWork(clock());
+	prev_time = clock();
+	level = 1;
+	action_cost = 3;
+	action_time = 2;
 }
 
 CWork::CWork(const clock_t& current) {

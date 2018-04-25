@@ -1,11 +1,12 @@
 #include "House.h"
 #include <ctime>
-#include <iostream>
 #include <string>
-#include <vector>
 
 CHouse::CHouse() {
-	CHouse(clock());
+	prev_time = clock();
+	level = 1;
+	action_cost = 3;
+	action_time = 2;
 }
 
 CHouse::CHouse(const clock_t& current) {

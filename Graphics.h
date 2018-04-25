@@ -2,10 +2,7 @@
 #define GAME_GRAPHICS_H
 
 #include <ctime>
-#include <iostream>
 #include <string>
-#include <vector>
-#include "Building.h"
 #include "City.h"
 
 class CCityDecorator : public CCity {
@@ -18,6 +15,6 @@ public:
     void Check(const std::string& s, const clock_t& current);
 };
 
-void draw(const CCity& city);
+void draw(CCity* city);
 
 #endif

@@ -1,11 +1,11 @@
 #include "Park.h"
 #include <ctime>
-#include <iostream>
 #include <string>
-#include <vector>
 
 CPark::CPark() {
-	CPark(clock());
+	prev_time = clock();
+	level = 1;
+	action_time = 2;
 }
 
 CPark::CPark(const clock_t& current) {

@@ -2,9 +2,7 @@
 #define GAME_CITY_H
 
 #include <ctime>
-#include <iostream>
 #include <string>
-#include <vector>
 #include "Building.h"
 #include "ParserAdapter.h"
 

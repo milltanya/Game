@@ -2,11 +2,10 @@
 #include <ctime>
 #include <iostream>
 #include <string>
-#include <vector>
 
 
 CCityDecorator::CCityDecorator() {
-    m_city = nullptr;
+    m_city = new CCity;
 }
 
 CCityDecorator::CCityDecorator(CCity* city) {
@@ -14,7 +13,7 @@ CCityDecorator::CCityDecorator(CCity* city) {
     draw(m_city);
 }
 CCityDecorator::~CCityDecorator() {
-	delete m_city;
+	//delete m_city;
 }
 void CCityDecorator::Check(const std::string& s, const clock_t& current) {
 	m_city->Check(s, current);
@@ -35,8 +34,7 @@ void draw(CCity* city) {
                 std::cout << " ";
             }
             else {
-                std::string s = city->Field[i][j]->getType();
-                std::cout << s[0];
+                std::cout << city->Field[i][j]->getType()[0];
             }
             std::cout << " ";
         }

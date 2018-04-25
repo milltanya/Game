@@ -2,9 +2,7 @@
 #define GAME_BUILDING_H
 
 #include <ctime>
-#include <iostream>
 #include <string>
-#include <vector>
 
 struct State
 {

@@ -1,8 +1,6 @@
 #ifndef GAME_PARSERADAPTER_H
 #define GAME_PARSERADAPTER_H
 
-#include <ctime>
-#include <iostream>
 #include <string>
 #include <vector>
 #include "Parser.h"

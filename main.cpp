@@ -1,10 +1,8 @@
 #include <ctime>
 #include <iostream>
 #include <string>
-#include <vector>
 #include "City.h"
 #include "Graphics.h"
-#include "Parser.h"
 
 
 int main() {
@@ -12,22 +10,35 @@ int main() {
 	int height = -1;
 	std::cout << "Enter height and width" << std::endl;
 	std::string s;
-    CStringParse Parser;
-	std::vector<std::string> tmp;
 	while ((width < 0) || (height < 0)) {
 		std::cout << "Format: 0 < height < 30 and 0 < width < 40" << std::endl;
 		std::getline(std::cin, s);
-		tmp = Parser.parse(s);
-		if (tmp.size() == 2) {
-			height = stoi(tmp[0]);
-			width = stoi(tmp[1]);
-			if ((height <= 0) || (height >= 30) || (width <= 0) || (width >= 40)) {
-				width = -1;
+		int a = 0;
+		while (s[a] == ' ')
+			++a;
+		int b = a + 1;
+		while (isdigit(s[b]))
+			++b;
+		int c = b + 1;
+		while (s[c] == ' ')
+			++c;
+		int d = c + 1;
+		while (isdigit(s[d]))
+			++d;
+		int e = d + 1;
+		while (e < s.size() && s[e] == ' ')
+			++e;
+		if (a < b && b < c && c < d && d < e && e >= s.size()) {
+			height = std::stoi(s.substr(a, b - a));
+			width = std::stoi(s.substr(c, d - c));
+			if (width < 0 || width >= 40 || height < 0 || height >= 30) {
+				std::cout << "Error!" << std::endl;
 				height = -1;
-				std::cout << "Error" << std::endl;
+				width = -1;
 			}
-		} else {
-			std::cout << "Error" << std::endl;
+		}
+		else {
+			std::cout << "Error!" << std::endl;
 		}
 	}
 	CCity City(width, height);
@@ -35,10 +46,8 @@ int main() {
 	std::cout << "Enter commands: " << std::endl;
 	std::cout << "End        or        Build <type> <x> <y>        or        any symbol for checking" << std::endl;
 	std::getline(std::cin, s);
-	while (!(s == "End")) {
-		if (s != "") {
-			CityDec.Check(s, clock());
-		}
+	while (s != "End") {
+		CityDec.Check(s, clock());
 		std::getline(std::cin, s);
 	}
 	return 0;

@@ -1,13 +1,9 @@
 #include "City.h"
 
-#include "Building.h"
 #include "House.h"
 #include "Work.h"
 #include "Park.h"
 #include "Road.h"
-#include "Graphics.h"
-#include "Parser.h"
-#include "ParserAdapter.h"
 #include <ctime>
 #include <iostream>
 #include <string>
@@ -56,13 +52,13 @@ CCity::~CCity() {
 		delete Field[i];
 	}
 	delete Field;
-	for (int i = 0; i < 3; ++i) {
+	/*for (int i = 0; i < 3; ++i) {
 		delete Factories[i];
-	}
+	}*/
 	delete Factories;
 }
 
-void CCity::Build(const std::string& t, const int x, const int y, const clock_t& current) {
+void CCity::Build(const std::string& t, const int y, const int x, const clock_t& current) {
 	int i = 0;
 	if (t != "Road") {
 		while ((i < 3) && (t != Factories[i]->type))
@@ -80,14 +76,12 @@ void CCity::Build(const std::string& t, const int x, const int y, const clock_t&
 		std::cout << "Error! There is an object!" << std::endl;
 		return;
 	}
-	else {
-		if ((t != "House") && !(((x > 0) && (Field[y][x - 1] != nullptr) && (Field[y][x - 1]->getType() == "Road")) ||
+	if (t != "House" && t != "Road" && !(((x > 0) && (Field[y][x - 1] != nullptr) && (Field[y][x - 1]->getType() == "Road")) ||
 			((x < width - 1) && (Field[y][x + 1] != nullptr) && (Field[y][x + 1]->getType() == "Road")) ||
 			((y > 0) && (Field[y - 1][x] != nullptr) && (Field[y - 1][x]->getType() == "Road")) ||
 			((x < height - 1) && (Field[y + 1][x] != nullptr) && (Field[y + 1][x]->getType() == "Road")))) {
-			std::cout << "Error! There is no road nearby!" << std::endl;
-			return;
-		}
+		std::cout << "Error! There is no road nearby!" << std::endl;
+		return;
 	}
 	if (t == "Road") {
 		Field[y][x] = &CRoad::getInstance();
@@ -99,7 +93,9 @@ void CCity::Build(const std::string& t, const int x, const int y, const clock_t&
 
 void CCity::Check(const std::string& s, const clock_t& current) {
 	std::vector<std::string> parse = Parser.parse(s);
-	if (parse[0] == "Build") {
+	for (int i = 0; i < parse.size(); ++i)
+		std::cout << parse[i] << std::endl;
+	if (parse.size() > 0 && parse[0].length() == 5 && parse[0] == "Build") {
 		if (parse.size() == 4) {
 			Build(parse[1], stoi(parse[2]), stoi(parse[3]), current);
 		} else {
