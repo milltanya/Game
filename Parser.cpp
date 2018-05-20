@@ -4,6 +4,7 @@
 #include <vector>
 
 std::vector<std::string> CStringParse::parse(const std::string& s) {
+	///Парсит строку по пробелам
 	int i = 0;
 	int j = -1;
     std::vector<std::string> ans;

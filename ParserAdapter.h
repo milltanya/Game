@@ -22,4 +22,4 @@ private:
 };
 
 
-#endif //GAME_PARSERADAPTER_H
+#endif

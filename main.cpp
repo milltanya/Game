@@ -44,7 +44,8 @@ int main() {
 	}
 	CCity City(width, height);
 	CCityDecorator CityDec(&City);
-	CCaretaker caretaker(City.getState());
+	CCaretaker caretaker;
+
 	std::cout << "Enter commands: " << std::endl;
 	std::cout << "End        or        Build <type> <x> <y>        or        Undo        or        any symbol for checking" << std::endl;
 	std::getline(std::cin, s);
@@ -52,8 +53,8 @@ int main() {
 		if (s == "Undo") {
 			City.restoreState(caretaker.getMemento());
 		}
-		CityDec.Check(s, clock());
 		caretaker.setMemento(City.saveState());
+		CityDec.Check(s, clock());
 		std::getline(std::cin, s);
 	}
 	return 0;

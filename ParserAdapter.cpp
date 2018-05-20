@@ -5,21 +5,23 @@
 #include "Parser.h"
 
 CParseAdapter::CParseAdapter() {
+	///Конструктор по умолчанию
     p_parse = new CStringParse;
     width = 0;
     height = 0;
 }
 
 CParseAdapter::CParseAdapter(CStringParse* p, int w, int h) {
+	///Конструктор по указателю на объект CStringParse, ширине и высоте поля w и h
     p_parse = p;
     width = w;
     height = h;
 }
 
-CParseAdapter::~CParseAdapter(){
-}
+CParseAdapter::~CParseAdapter(){}
 
 std::vector<std::string> CParseAdapter::parse(const std::string& s) {
+	///Адаптирует аргументы, введенные пользователем в формат, удобный для использования
 	std::vector<std::string> t = p_parse->parse(s);
 	int i = 0;
 	int a = -1;

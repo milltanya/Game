@@ -13,6 +13,7 @@
 CCity::CCity() {}
 
 CCity::CCity(int width, int height) {
+	/// онструктор города по ширине и высоте пол€
 	State = SCityState(width, height);	
 	Factories.resize(3);
 	Factories[0] = new CHouseFactory;
@@ -22,11 +23,13 @@ CCity::CCity(int width, int height) {
 }
 
 CCity::~CCity() {
+	///ƒеструктор города
 	for (int i = 0; i < Factories.size(); ++i)
 		delete Factories[i];
 }
 
 void CCity::Build(const std::string& t, const int y, const int x, const clock_t& current) {
+	///ѕостроение объекта типа t на координатах x, y в момент времени current
 	int i = 0;
 	if (t != "Road") {
 		while ((i < Factories.size()) && (t != Factories[i]->type))
@@ -60,6 +63,7 @@ void CCity::Build(const std::string& t, const int y, const int x, const clock_t&
 }
 
 void CCity::Check(const std::string& s, const clock_t& current) {
+	///ѕроверка изменений в городе и парсинг аргументов в строке s
 	std::vector<std::string> parse = Parser.parse(s);
 	if (parse.size() > 0 && parse[0].length() == 5 && parse[0] == "Build") {
 		if (parse.size() == 4) {
@@ -80,13 +84,16 @@ void CCity::Check(const std::string& s, const clock_t& current) {
 }
 
 SCityState CCity::getState() {
+	///возвращает состо€ние
     return State;
 }
 
 CMemento CCity::saveState() {
+	///сохран€ет состо€ние
     return CMemento(State);
 }
 
 void CCity::restoreState(CMemento memento) {
-    State = memento.getState();
+	///восстанавливает состо€ние
+    State = SCityState(memento.getState());
 }

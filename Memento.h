@@ -16,7 +16,7 @@ class CCaretaker {
 private:
 	CMemento memento;
 public:
-	CCaretaker(CMemento m);
+	CCaretaker();
 	CMemento getMemento();
 	void setMemento(CMemento m);
 };

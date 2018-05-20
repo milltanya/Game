@@ -15,6 +15,6 @@ public:
     void Check(const std::string& s, const clock_t& current);
 };
 
-void draw(CCity* city);
+void draw(const SCityState& state);
 
 #endif
