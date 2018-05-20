@@ -10,7 +10,7 @@ class CWork : public CBuilding {
 public:
 	CWork();
 	explicit CWork(const clock_t& current);
-	void action(State& current) override;
+	void action(SState& current) override;
 	std::string getType() override;
 private:
 	clock_t prev_time;

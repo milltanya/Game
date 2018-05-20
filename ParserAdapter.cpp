@@ -1,6 +1,5 @@
 #include "ParserAdapter.h"
 
-
 #include <string>
 #include <vector>
 #include "Parser.h"
@@ -18,7 +17,8 @@ CParseAdapter::CParseAdapter(CStringParse* p, int w, int h) {
 }
 
 CParseAdapter::~CParseAdapter(){
-    //delete p_parse;
+    if (p_parse != nullptr)
+		delete p_parse;
 }
 
 std::vector<std::string> CParseAdapter::parse(const std::string& s) {

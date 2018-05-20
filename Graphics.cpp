@@ -22,26 +22,26 @@ void CCityDecorator::Check(const std::string& s, const clock_t& current) {
 
 void draw(CCity* city) {
     int p;
-    for (int i = 0; i < city->height; ++i) {
-        p = city->height - i;
+    for (int i = 0; i < city->State.height; ++i) {
+        p = city->State.height - i;
         std::cout << " " << p;
         if (p < 10) {
             std::cout << " ";
         }
-        for (int j = 0; j < city->width; ++j) {
+        for (int j = 0; j < city->State.width; ++j) {
             std::cout << " ";
-            if (city->Field[i][j] == nullptr) {
+            if (city->State.Field[i][j] == nullptr) {
                 std::cout << " ";
             }
             else {
-                std::cout << city->Field[i][j]->getType()[0];
+                std::cout << city->State.Field[i][j]->getType()[0];
             }
             std::cout << " ";
         }
         std::cout << std::endl;
     }
     std::cout << "   ";
-    for (int i = 0; i < city->width; ++i) {
+    for (int i = 0; i < city->State.width; ++i) {
         p = i + 1;
         std::cout << " " << p;
         if (p < 10) {
@@ -49,8 +49,8 @@ void draw(CCity* city) {
         }
     }
     std::cout << std::endl;
-    std::cout << "money: " << city->City_State.money << std::endl;
-    std::cout << "population: " << city->City_State.population << std::endl;
-    std::cout << "wealth: " << city->City_State.wealth << std::endl;
-    std::cout << "happiness: " << city->City_State.happiness << std::endl;
+    std::cout << "money: " << city->State.State.money << std::endl;
+    std::cout << "population: " << city->State.State.population << std::endl;
+    std::cout << "wealth: " << city->State.State.wealth << std::endl;
+    std::cout << "happiness: " << city->State.State.happiness << std::endl;
 }

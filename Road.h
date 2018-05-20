@@ -9,7 +9,7 @@
 class CRoad : public CBuilding {
 private:
 	CRoad();
-	void action(State& current) override;
+	void action(SState& current) override;
 	std::string getType() override;
 public:
 	static CBuilding& getInstance();

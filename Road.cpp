@@ -2,10 +2,9 @@
 #include <ctime>
 #include <string>
 
-CRoad::CRoad() {
-}
+CRoad::CRoad() {}
 
-void CRoad::action(State& current) {}
+void CRoad::action(SState& current) {}
 
 CBuilding& CRoad::getInstance() {
 	static CRoad instance;

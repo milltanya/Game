@@ -20,7 +20,7 @@ std::string CWork::getType() {
 	return "Work";
 }
 
-void CWork::action(State& current) {
+void CWork::action(SState& current) {
 	if (((current.time - prev_time) / CLOCKS_PER_SEC >= action_time) && (current.happiness >= action_cost)) {
 		current.money += level;
 		current.wealth += level;

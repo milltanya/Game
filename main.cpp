@@ -3,6 +3,7 @@
 #include <string>
 #include "City.h"
 #include "Graphics.h"
+#include "Memento.cpp"
 
 
 int main() {
@@ -43,11 +44,16 @@ int main() {
 	}
 	CCity City(width, height);
 	CCityDecorator CityDec(&City);
+	CCaretaker caretaker(City.getState());
 	std::cout << "Enter commands: " << std::endl;
-	std::cout << "End        or        Build <type> <x> <y>        or        any symbol for checking" << std::endl;
+	std::cout << "End        or        Build <type> <x> <y>        or        Undo        or        any symbol for checking" << std::endl;
 	std::getline(std::cin, s);
 	while (s != "End") {
+		if (s == "Undo") {
+			City.restoreState(caretaker.getMemento());
+		}
 		CityDec.Check(s, clock());
+		caretaker.setMemento(City.saveState());
 		std::getline(std::cin, s);
 	}
 	return 0;

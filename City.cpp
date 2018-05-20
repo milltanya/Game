@@ -4,57 +4,32 @@
 #include "Work.h"
 #include "Park.h"
 #include "Road.h"
+#include "Strategy.h"
 #include <ctime>
 #include <iostream>
 #include <string>
 #include <vector>
 
 CCity::CCity() {
-	width = 0;
-	height = 0;
-	Field = nullptr;
-	City_State.time = 0;
-	City_State.money = 0;
-	City_State.population = 0;
-	City_State.wealth = 0;
-	City_State.happiness = 0;
+	State = SCityState(0, 0);
 	Factories = nullptr;
 }
 
 CCity::CCity(int x, int y) {
-	width = x;
-	height = y;
-	Field = new CBuilding**[height];
-	for (int i = 0; i < height; ++i) {
-		Field[i] = new CBuilding*[width];
-		for (int j = 0; j < width; ++j)
-			Field[i][j] = nullptr;
-	}
-	City_State.time = clock();
-	City_State.money = 10;
-	City_State.population = 1;
-	City_State.wealth = 5;
-	City_State.happiness = 5;
+	State = SCityState(x, y);	
 	Factories = new CFactory*[3];
 	Factories[0] = new CHouseFactory;
 	Factories[1] = new CWorkFactory;
 	Factories[2] = new CParkFactory;
-	Parser = CParseAdapter(new CStringParse, width, height);
+	Parser = CParseAdapter(new CStringParse, x, y);
 }
 
 CCity::~CCity() {
-	for (int i = 0; i < height; ++i) {
-		for (int j = 0; j < width; ++j) {
-			if (Field[i][j] != nullptr) {
-				delete Field[i][j];
-			}
+	for (int i = 0; i < 3; ++i) {
+		if (Factories[i] != nullptr) {
+			delete Factories[i];
 		}
-		delete Field[i];
 	}
-	delete Field;
-	/*for (int i = 0; i < 3; ++i) {
-		delete Factories[i];
-	}*/
 	delete Factories;
 }
 
@@ -68,26 +43,26 @@ void CCity::Build(const std::string& t, const int y, const int x, const clock_t&
 			return;
 		}
 	}
-	if ((y < 0) || (y >= height) || (x < 0) || (x >= width)) {
+	if ((y < 0) || (y >= State.height) || (x < 0) || (x >= State.width)) {
 		std::cout << "Error! Wrong coordinates!" << std::endl;
 		return;
 	}
-	if (Field[y][x] != nullptr) {
+	if (State.Field[y][x] != nullptr) {
 		std::cout << "Error! There is an object!" << std::endl;
 		return;
 	}
-	if (t != "House" && t != "Road" && !(((x > 0) && (Field[y][x - 1] != nullptr) && (Field[y][x - 1]->getType() == "Road")) ||
-			((x < width - 1) && (Field[y][x + 1] != nullptr) && (Field[y][x + 1]->getType() == "Road")) ||
-			((y > 0) && (Field[y - 1][x] != nullptr) && (Field[y - 1][x]->getType() == "Road")) ||
-			((x < height - 1) && (Field[y + 1][x] != nullptr) && (Field[y + 1][x]->getType() == "Road")))) {
+	if (t != "House" && t != "Road" && !(((x > 0) && (State.Field[y][x - 1] != nullptr) && (State.Field[y][x - 1]->getType() == "Road")) ||
+			((x < State.width - 1) && (State.Field[y][x + 1] != nullptr) && (State.Field[y][x + 1]->getType() == "Road")) ||
+			((y > 0) && (State.Field[y - 1][x] != nullptr) && (State.Field[y - 1][x]->getType() == "Road")) ||
+			((x < State.height - 1) && (State.Field[y + 1][x] != nullptr) && (State.Field[y + 1][x]->getType() == "Road")))) {
 		std::cout << "Error! There is no road nearby!" << std::endl;
 		return;
 	}
 	if (t == "Road") {
-		Field[y][x] = &CRoad::getInstance();
+		State.Field[y][x] = &CRoad::getInstance();
 	}
 	else {
-		Field[y][x] = Factories[i]->create(current);
+		State.Field[y][x] = Factories[i]->create(current);
 	}
 }
 
@@ -102,12 +77,25 @@ void CCity::Check(const std::string& s, const clock_t& current) {
 			std::cout << "Error! Wrong number of arguments" << std::endl;
 		}
 	}
-	City_State.time = current;
-	for (int i = 0; i < height; ++i) {
-		for (int j = 0; j < width; ++j) {
-			if (Field[i][j] != nullptr) {
-				Field[i][j]->action(this->City_State);
+	State.State.time = current;
+	for (int i = 0; i < State.height; ++i) {
+		for (int j = 0; j < State.width; ++j) {
+			if (State.Field[i][j] != nullptr) {
+				customClient.setStrategy(State.Field[i][j]);
+				customClient.useStrategy(State.State);
 			}
 		}
 	}
+}
+
+SCityState CCity::getState() {
+    return State;
+}
+
+CMemento CCity::saveState() {
+    return *new CMemento(State);
+}
+
+void CCity::restoreState(CMemento memento) {
+    State = memento.getState();
 }

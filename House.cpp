@@ -20,7 +20,7 @@ std::string CHouse::getType() {
 	return "House";
 }
 
-void CHouse::action(State& current) {
+void CHouse::action(SState& current) {
 	if (((current.time - prev_time) >= CLOCKS_PER_SEC*action_time) && (current.wealth >= action_cost)) {
 		current.population += level;
 		current.wealth -= action_cost;

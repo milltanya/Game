@@ -18,7 +18,7 @@ std::string CPark::getType() {
 	return "Park";
 }
 
-void CPark::action(State& current) {
+void CPark::action(SState& current) {
 	if ((current.time - prev_time) / CLOCKS_PER_SEC >= action_time) {
 		current.happiness += level;
 		prev_time = current.time;
