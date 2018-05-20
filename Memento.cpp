@@ -7,7 +7,7 @@ CMemento::CMemento() {
 }
 
 CMemento::CMemento(SCityState s) {
-    state = s;
+	state = SCityState(s);
 }
 
 SCityState CMemento::getState() {
@@ -22,6 +22,6 @@ CMemento CCaretaker::getMemento() {
     return memento;
 }
 
-void CCaretaker::setMemento(CMemento memento) {
-    memento = memento;
+void CCaretaker::setMemento(CMemento m) {
+    memento = m;
 }

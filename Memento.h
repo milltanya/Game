@@ -18,7 +18,7 @@ private:
 public:
 	CCaretaker(CMemento m);
 	CMemento getMemento();
-	void setMemento(CMemento memento);
+	void setMemento(CMemento m);
 };
 
 #endif

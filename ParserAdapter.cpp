@@ -17,8 +17,6 @@ CParseAdapter::CParseAdapter(CStringParse* p, int w, int h) {
 }
 
 CParseAdapter::~CParseAdapter(){
-    if (p_parse != nullptr)
-		delete p_parse;
 }
 
 std::vector<std::string> CParseAdapter::parse(const std::string& s) {

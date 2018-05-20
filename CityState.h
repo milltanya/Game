@@ -2,14 +2,15 @@
 #define GAME_CITYSTATE_H
 
 #include "Building.h"
+#include <vector>
 
 struct SCityState {
-	CBuilding*** Field;
-	int width, height;
+	std::vector<std::vector<CBuilding*>> Field;
 	SState State;
+	SCityState(const SCityState& s);
 	SCityState();
 	SCityState(int w, int h);
 	~SCityState();
 };
 
-#endif GAME_CITYSTATE_H
+#endif

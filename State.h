@@ -8,6 +8,7 @@ struct SState
 	clock_t time;
 	int money, population, wealth, happiness;
 	SState();
+	SState::SState(const SState& s);
 	SState(int m, int p, int w, int h);
 };
 

@@ -22,13 +22,13 @@ void CCityDecorator::Check(const std::string& s, const clock_t& current) {
 
 void draw(CCity* city) {
     int p;
-    for (int i = 0; i < city->State.height; ++i) {
-        p = city->State.height - i;
+    for (int i = 0; i < city->State.Field.size(); ++i) {
+        p = city->State.Field.size() - i;
         std::cout << " " << p;
         if (p < 10) {
             std::cout << " ";
         }
-        for (int j = 0; j < city->State.width; ++j) {
+        for (int j = 0; j < city->State.Field[0].size(); ++j) {
             std::cout << " ";
             if (city->State.Field[i][j] == nullptr) {
                 std::cout << " ";
@@ -41,7 +41,7 @@ void draw(CCity* city) {
         std::cout << std::endl;
     }
     std::cout << "   ";
-    for (int i = 0; i < city->State.width; ++i) {
+    for (int i = 0; i < city->State.Field[0].size(); ++i) {
         p = i + 1;
         std::cout << " " << p;
         if (p < 10) {
